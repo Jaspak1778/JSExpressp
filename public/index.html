@@ -9,17 +9,32 @@
 <body>
     <center>
     <h1 style="font-family: sans-serif;">Herkut ohjelma</h1>
-    <br>
-    <h3>Node express server</h3>
 
     <div id="sisältö"></div>
     </center>
     <script>
+
+        async function fetchData() {
         document.getElementById("sisältö").innerHTML = "<h4>Ladataan..</h4>"
-       
-        fetch("http://localhost:3000/api/herkut")
-        .then(res => res.json())  
-        .then(js => console.log(js))
+        
+        var x = `<table><thead><th>Herkun nimi</th><th>Tuotekoodi</th></thead><tbody>`
+        try {
+        const response = await fetch("http://localhost:3000/api/herkut")
+        const herkkudata = await response.json()
+
+        await herkkudata.map(h => {
+            x += `<tr><td>${h.name}</td><td>${h.id}</td></tr>`
+        })
+
+        x += `</tbody></table>`
+        document.getElementById("sisältö").innerHTML = x
+        }
+        catch (error) {
+            console.error("Error fetching data:", error)
+        }
+
+    }
+    fetchData()
     </script>
 </body>
 </html>
