@@ -1,0 +1,14 @@
+{
+  "name": "ndserver",
+  "version": "1.0.0",
+  "description": "4n viikon harjoitus node projekti",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jani Pekkala",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

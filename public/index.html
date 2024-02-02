@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Herkut</title>
+</head>
+<body>
+    <center>
+    <h1 style="font-family: sans-serif;">Herkut ohjelma</h1>
+    <br>
+    <h3>Node express server</h3>
+
+    <div id="sisältö"></div>
+    </center>
+    <script>
+        document.getElementById("sisältö").innerHTML = "<h4>Ladataan..</h4>"
+       
+        fetch("http://localhost:3000/api/herkut")
+        .then(res => res.json())  
+        .then(js => console.log(js))
+    </script>
+</body>
+</html>
