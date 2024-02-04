@@ -5,15 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
     <title>Herkut</title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
     <center>
-    <h1 style="font-family: sans-serif;">Herkut ohjelma</h1>
+        <div id="pin-div">
+            <input id="pin" placeholder="pin code" type=""password" />
+            <button onclick="checkPin()">Login</button>
+        </div>
+            
+        <h1 class="hidden">Herkut ohjelma</h1>
 
-    <div id="sisältö"></div>
+        <h2 id="welcome">Tervetuloa selailemaan herkkuja ! </h2>
+
+        <button class="hidden" onclick="logOut()">Logout</button>
+
+        <div class="hidden" id="sisältö"></div>
     </center>
+
     <script>
 
+        const savedPin = localStorage.getItem("pinkoodi")
+        if (savedPin != null && savedPin != undefined) {
+            showElements()
+        }    
+
+        //------ LOG OUT----------------
+         function logOut() {
+            localStorage.clear()
+            
+            window.location.reload()
+            alert("Kirjauduttu ulos")
+
+
+         }
+
+         //----------------CHECK PIN------------------
+        async function checkPin() {
+            var pin = document.getElementById("pin").value
+            const response = await fetch("http://localhost:3000/api/getpin")
+            const correctPin = await response.json()
+
+            if (pin == correctPin) {
+            var hiddenElements = document.getElementsByClassName("hidden")
+
+            for (i=0; i <hiddenElements.length; i++){
+            hiddenElements[i].style.visibility ="visible"
+            
+            document.getElementById("pin-div").style.visibility ="hidden"  
+            
+            document.getElementById("welcome").style.visibility = "visible"
+            //---timeout funktio, ottaa vastaan kaksi parametria( 4000 on 4 sek)        
+            setTimeout(() => {
+                document.getElementById("welcome").style.visibility ="hidden"
+
+            },4000 ) //tarkoittaa 4 sekunttia 
+            }  
+            }
+            else{
+                alert("Väärä pinkoodi")
+            }
+        }
+
+        //---------------FETCH DATA---------------------------------
         async function fetchData() {
         document.getElementById("sisältö").innerHTML = "<h4>Ladataan..</h4>"
         
@@ -34,7 +88,9 @@
         }
 
     }
-    fetchData()
+    //---------------Funktio kutsu----------------
+
+        fetchData()
     </script>
 </body>
 </html>
